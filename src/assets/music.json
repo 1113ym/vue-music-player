@@ -25,14 +25,6 @@
 	},
 	{
 		"id": 4,
-		"title": "别让我忘不掉",
-		"name": "威仔、胡艾彤 - 别让我忘不掉.mp3",
-		"singer": "威仔、胡艾彤",
-		"specialName": "威仔.jpg",
-		"duration": 247
-	},
-	{
-		"id": 5,
 		"title": "怪我咯",
 		"name": "童可可 - 怪我咯.mp3",
 		"singer": "童可可",
@@ -40,15 +32,7 @@
 		"duration": 257
 	},
 	{
-		"id": 6,
-		"title": "恶魔的爱",
-		"name": "李宏毅、李明霖 - 恶魔的爱.mp3",
-		"singer": "李宏毅、李明霖",
-		"specialName": "李宏毅.jpg",
-		"duration": 252
-	},
-	{
-		"id": 7,
+		"id": 5,
 		"title": "No.9",
 		"name": "T-Ara - No.9.mp3",
 		"singer": "T-Ara",
@@ -56,7 +40,7 @@
 		"duration": 228
 	},
 	{
-		"id": 8,
+		"id": 6,
 		"title": "猫步轻悄(Like a Cat)",
 		"name": "AOA - 猫步轻悄(Like a Cat).mp3",
 		"singer": "AOA",
