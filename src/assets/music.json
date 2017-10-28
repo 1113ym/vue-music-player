@@ -1,0 +1,66 @@
+[
+	{
+		"id": 1,
+		"title": "变坏",
+		"name": "欧阳朵、渔圈 - 变坏.mp3",
+		"singer": "欧阳朵、渔圈",
+		"specialName": "欧阳朵.jpg",
+		"duration": 244
+	},
+	{
+		"id": 2,
+		"title": "离别诉",
+		"name": "欧阳朵 - 离别诉.mp3",
+		"singer": "欧阳朵",
+		"specialName": "欧阳朵.jpg",
+		"duration": 197
+	},
+	{
+		"id": 3,
+		"title": "两个我们",
+		"name": "千百顺、任立佳 - 两个我们.mp3",
+		"singer": "千百顺、任立佳",
+		"specialName": "千百顺.jpg",
+		"duration": 234
+	},
+	{
+		"id": 4,
+		"title": "别让我忘不掉",
+		"name": "威仔、胡艾彤 - 别让我忘不掉.mp3",
+		"singer": "威仔、胡艾彤",
+		"specialName": "威仔.jpg",
+		"duration": 247
+	},
+	{
+		"id": 5,
+		"title": "怪我咯",
+		"name": "童可可 - 怪我咯.mp3",
+		"singer": "童可可",
+		"specialName": "童可可.jpg",
+		"duration": 257
+	},
+	{
+		"id": 6,
+		"title": "恶魔的爱",
+		"name": "李宏毅、李明霖 - 恶魔的爱.mp3",
+		"singer": "李宏毅、李明霖",
+		"specialName": "李宏毅.jpg",
+		"duration": 252
+	},
+	{
+		"id": 7,
+		"title": "No.9",
+		"name": "T-Ara - No.9.mp3",
+		"singer": "T-Ara",
+		"specialName": "Tara.jpg",
+		"duration": 228
+	},
+	{
+		"id": 8,
+		"title": "猫步轻悄(Like a Cat)",
+		"name": "AOA - 猫步轻悄(Like a Cat).mp3",
+		"singer": "AOA",
+		"specialName": "Aoa.jpg",
+		"duration": 219
+	}
+]
