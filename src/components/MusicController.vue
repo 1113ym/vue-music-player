@@ -5,6 +5,7 @@
 			<div class="current-time">{{currentTimeStr}}</div>
 			<div class="progress-bar" ref="progressBar" @click="changeTime">
 				<div class="progress" :style="progressWidth"></div>
+				<div class="progress-load" :style="loadProgressWidth"></div>
 				<div class="progress-button" :style="buttonOffsetLeft"></div>
 			</div>
 			<div class="duration">{{durationStr}}</div>
@@ -21,7 +22,7 @@
 <script>
 export default {
 	name: "MusicController",
-	props: ["playingObj"],
+	props: ["playingObj", "loadPrecent"],
 	data: function(){
 		return {
 			playing: false
@@ -51,6 +52,9 @@ export default {
 			let playingObj = this.playingObj;
 			let progressPrecent = playingObj.currentTime / playingObj.duration * 100;
 			return {width:progressPrecent + "%"};
+		},
+		loadProgressWidth() {
+			return {width:this.loadPrecent + "%"};
 		},
 		buttonOffsetLeft() {
 			let playingObj = this.playingObj;
@@ -139,18 +143,32 @@ function formatTime(time){
 	right: 43px;
 	margin-top: 9px;
 	height: 3px;
-	background-color: #EEEEEE;
+	background-color: #CCCCCC;
 	cursor: default;
 }
 .progress-bar .progress{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
 	width: 0%;
 	height: 3px;
 	background-color: #FF0000;
+}
+.progress-bar .progress-load{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 0%;
+	height: 3px;
+	background-color: #EEEEEE;
 }
 .progress-bar .progress-button{
 	position: absolute;
 	top: 0;
 	left: 0;
+	z-index: 3;
 	width: 14px;
 	height: 14px;
 	margin-top: -6px;

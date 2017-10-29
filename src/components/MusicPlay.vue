@@ -9,7 +9,7 @@
 		</div>
 		<!-- 播放控制组件 -->
 		<div class="controller-wrap">
-			<music-controller :playingObj="playingObj"
+			<music-controller :playingObj="playingObj" :loadPrecent="loadPrecent"
 			@playOrPause="playOrPause"
 			@previous="previous"
 			@next="next"
@@ -40,7 +40,8 @@ export default {
 			},
 			currentTime: 0,
 			duration: 0,
-			playing: false
+			playing: false,
+			loadPrecent: 0
 		}
 	},
 	computed: {
@@ -70,13 +71,13 @@ export default {
 		playOrPause() {
 			if(this.audioDOM.paused){
 				this.audioDOM.play();
-				this.rotateflag = this.rotateSingerImg();
+				this.startRotateSingerImg();
 				this.playStatus = true;
 
 				this.playing = true;
 			}else{
 				this.audioDOM.pause();
-				clearInterval(this.rotateflag);
+				this.stopRotateSingerImg();
 				this.playStatus = false;
 
 				this.playing = false;
@@ -91,11 +92,6 @@ export default {
 			}else{
 				this.currentIndex = this.currentIndex - 1;
 			}
-
-			//初始化歌手图片样式
-			this.startRotateDeg = 0;
-			this.singerImgDOM.style["WebKitTransform"] = "rotate(" + this.startRotateDeg + "deg)";
-			this.singerImgDOM.style["transform"] = "rotate(" + this.startRotateDeg + "deg)";
 
 			//获取上一首歌曲
 			let currentSong = this.songs[this.currentIndex];
@@ -113,11 +109,6 @@ export default {
 				this.currentIndex = this.currentIndex + 1;
 			}
 
-			//初始化歌手图片样式
-			this.startRotateDeg = 0;
-			this.singerImgDOM.style["WebKitTransform"] = "rotate(" + this.startRotateDeg + "deg)";
-			this.singerImgDOM.style["transform"] = "rotate(" + this.startRotateDeg + "deg)";
-
 			//获取下一首歌曲
 			let currentSong = this.songs[this.currentIndex];
 			this.audioDOM.src = currentSong.url;
@@ -128,25 +119,19 @@ export default {
 		 * 修改播放时间
 		 */
 		changeTime(precent) {
-			if(this.playStatus === true){
-				let currentSong = this.currentSong;
-				//设置歌曲当前播放时间
-				this.audioDOM.currentTime = currentSong.duration * precent;
-				this.updateProgress(currentSong.duration * precent, currentSong.duration, true);
-			}
+			let currentSong = this.currentSong;
+			//设置歌曲当前播放时间
+			this.audioDOM.currentTime = currentSong.duration * precent;
+			this.updateProgress(currentSong.duration * precent, currentSong.duration, true);
 		},
 		/**
-		 * 歌手图片定时动画
+		 * 歌手图片动画
 		 */
-		rotateSingerImg() {
-		 	return setInterval(() => {
-		 		if(this.startRotateDeg >= 360){
-		 			this.startRotateDeg = 0;
-		 		}
-		 		let deg = this.startRotateDeg += 1;
-				this.singerImgDOM.style["WebKitTransform"] = "rotate(" + deg + "deg)";
-				this.singerImgDOM.style["transform"] = "rotate(" + deg + "deg)";
-		 	}, 30);
+		startRotateSingerImg() {
+		 	this.singerImgDOM.classList.add("animation-singer");
+		},
+		stopRotateSingerImg() {
+			this.singerImgDOM.className = "singer-img";
 		},
 		/**
 		 * 更新播放进度
@@ -164,8 +149,6 @@ export default {
 	created: function(){
 		//定义一些变量，不需要让vue检测更新
 
-		//图片开始旋转角度
-		this.startRotateDeg = 0;
 		//当前歌曲的位置
 		this.currentIndex = 0;
 		//歌曲播放状态
@@ -194,43 +177,47 @@ export default {
 		this.singerImgDOM = this.$refs.singerImg;
 		//设置当前歌曲
 		this.audioDOM.src = this.currentSong.url;
-		let canplay = () => {
-			//当音乐可以播放时触发组件更新
+
+		this.audioDOM.addEventListener("loadstart", () => {
+			//触发组件更新
 			this.currentSong = this.songs[this.currentIndex];
 			this.currentTime = 0;
 			this.duration = this.songs[this.currentIndex].duration;
 
+			this.loadPrecent = 0;
+		}, false);
+
+		this.audioDOM.addEventListener("progress", () => {
+			//当下载音频时设置已缓冲进度
+			if(this.audioDOM.readyState === 4){
+				this.loadPrecent = this.audioDOM.buffered.end(0) / this.audioDOM.duration * 100;
+			}
+		}, false);
+
+		let canplay = () => {
 			if(this.playStatus === true){
 				this.audioDOM.play();
 			}else{
 				this.audioDOM.pause();
-				clearInterval(this.rotateflag);
 			}
 		}
 		this.audioDOM.addEventListener("canplay", canplay, false);
-		
-		this.audioDOM.addEventListener("play", () => {
-			//当点击播放按钮的时候不启动动画
-			if(this.rotateflag === 0){
-				//启动歌手图片定时动画
-				this.rotateflag = this.rotateSingerImg();
-			}
-		}, false);
+
 		this.audioDOM.addEventListener("timeupdate", () => {
 			this.updateProgress(this.audioDOM.currentTime, this.audioDOM.duration, true);
+
+			//设置已缓冲进度
+			if(this.audioDOM.readyState === 4){
+				this.loadPrecent = this.audioDOM.buffered.end(0) / this.audioDOM.duration * 100;
+			}
 		}, false);
 		this.audioDOM.addEventListener("ended", () => {
 			this.updateProgress(0, this.audioDOM.duration, false);
-			//取消歌手图片定时动画
-			clearInterval(this.rotateflag);
+			this.stopRotateSingerImg();
 			this.playStatus = false;
 
 			//this.next();
 		}, false);
-	},
-	destroyed: function(){
-		//取消歌手图片定时动画
-		clearInterval(this.rotateflag);
 	}
 }
 </script>
@@ -287,5 +274,17 @@ export default {
 	width: 100%;
 	padding: 20px;
 	box-sizing: border-box;
-}	
+}
+.animation-singer{
+	-webkit-animation: rotate infinite 10s linear;
+	animation: rotate infinite 10s linear;
+}
+@-webkit-keyframes rotate{
+	from{-webkit-transform: rotate(0deg);}
+	to{-webkit-transform: rotate(360deg);}
+}
+@keyframes rotate{
+	from{transform: rotate(0deg);}
+	to{transform: rotate(360deg);}
+}
 </style>
