@@ -1,6 +1,6 @@
 # vue-music-player
 
-This is a music-player application written by vue.
+This is a music player application written by vue.
 
 It uses vue-cli to build.
 
@@ -18,8 +18,8 @@ vue-music-player/
       images/
         ...
       music/
-  	    ...
-  	  music.json
+        ...
+      music.json
     components/
       Header.vue
       MusicController.vue
