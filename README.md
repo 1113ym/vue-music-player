@@ -4,6 +4,8 @@ This is a music-player application written by vue.
 
 It uses vue-cli to build.
 
+Online preview address https://code-mcx.github.io/vue-music-player.
+
 ## Project Structure
 
 ```
@@ -13,9 +15,9 @@ vue-music-player/
   index.html
   src/
     assets/
-  	  images/
-  	    ...
-  	  music/
+      images/
+        ...
+      music/
   	    ...
   	  music.json
     components/
