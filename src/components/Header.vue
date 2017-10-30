@@ -33,7 +33,7 @@ export default {
 	position: absolute;
 	width: 22px;
 	height: 22px;
-	left: 20px;
+	left: 15px;
 	top: 14px;
 }
 .music-title{
